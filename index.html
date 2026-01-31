@@ -80,6 +80,46 @@ img {
   background: black;
   color: white;
 }
+
+/* Secret page specific styles */
+#secret .mobile-container {
+  position: relative;
+  width: 360px;
+  height: 640px;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  background: #fff;
+  text-align: center;
+  padding: 20px;
+  color: #d63384;
+  margin: auto;
+}
+#secret .mobile-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.6;
+  display: none;
+}
+#secret .mobile-container .foreground {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+#kissContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
 </style>
 </head>
 <body>
@@ -115,27 +155,26 @@ img {
   <button onclick="askPassword()">Secret 🔐</button>
 </section>
 
-<!-- PAGE 4: Secret Page -->
-<section id="secret">
-  <!-- Muted Video Background -->
-  <video autoplay loop muted playsinline
-         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1;">
-    <source src="secret.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+<!-- Secret page initially hidden -->
+<section id="secret" style="display:none; justify-content:center; align-items:center; height:100vh;">
+  <div class="mobile-container">
 
-  <h1>Only You Can See This 🔐</h1>
-  <p style="font-size:1.3rem;color:#d63384;">
-    This is my secret truth…  
-    You’re my forever, not just my Valentine 💍
-  </p>
+    <!-- Video initially hidden -->
+    <video id="secretVideo" autoplay loop muted playsinline style="display:none;">
+      <source src="secret.mp4" type="video/mp4">
+    </video>
 
-  <button onclick="kiss()">Click for a kiss 😘</button>
-  <p id="kissMsg"></p>
-
-  <h2>One Day…</h2>
-  <p>This page won’t be a tease anymore 💍</p>
+    <div class="foreground">
+      <h1>Only You Can See This 🔐</h1>
+      <p>This is my secret truth… You’re my forever 💍</p>
+      <button onclick="kiss()">Click for a kiss 😘</button>
+      <div id="kissContainer"></div>
+      <h2>One Day…</h2>
+      <p>I promise you my Kenzie I'll never stop till I make you my wife 💍</p>
+    </div>
+  </div>
 </section>
+
 
 <script>
 const noBtn = document.getElementById("no");
@@ -172,19 +211,45 @@ function startHearts() {
 
 function askPassword() {
   const pass = prompt("Enter the secret password 💕");
-  if (pass === "Kenzie") goTo('secret');
-  else alert("Nope 😈 only Kenzie knows it");
+  if (pass === "Kenzie") {
+    const secretSection = document.getElementById("secret");
+    secretSection.style.display = "flex"; // show the section
+    secretSection.style.justifyContent = "center";
+    secretSection.style.alignItems = "center";
+
+    const video = document.getElementById("secretVideo");
+    video.style.display = "block"; // show video
+    video.play();
+  } else {
+    alert("Nope 😈 only Kenzie knows it");
+  }
 }
 
+
 function kiss() {
-  document.getElementById("kissMsg").innerText =
-    "Redeemed 😘 Unlimited kisses loading...";
+  const container = document.getElementById("kissContainer");
+  const heart = document.createElement('div');
+  heart.innerText = "💖";
+  heart.style.position = "absolute";
+  heart.style.fontSize = (Math.random()*30 + 20) + "px";
+  heart.style.left = Math.random() * (container.offsetWidth - 50) + "px";
+  heart.style.top = Math.random() * (container.offsetHeight - 50) + "px";
+  heart.style.animation = "floatKiss 2s ease-out forwards";
+  container.appendChild(heart);
+  setTimeout(() => heart.remove(), 2000);
 }
 
 function toggleDark() {
   document.body.classList.toggle("dark");
 }
 </script>
+
+<style>
+@keyframes floatKiss {
+  0% { transform: translateY(0) rotate(0deg); opacity:1; }
+  100% { transform: translateY(-150px) rotate(15deg); opacity:0; }
+}
+</style>
 
 </body>
 </html>
