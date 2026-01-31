@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Kenzie 💖</title>
-
 <style>
 :root {
   --bg: linear-gradient(135deg, #ffe4ec, #fff);
@@ -32,6 +31,10 @@ section {
 
 section.active {
   display: block;
+}
+
+h1 {
+  font-size: 2.5rem;
 }
 
 button {
@@ -79,27 +82,26 @@ img {
 }
 </style>
 </head>
-
 <body>
 
 <button class="toggle" onclick="toggleDark()">🌙</button>
 <audio id="music" src="music.mp3" loop></audio>
 
-<!-- PAGE 1 -->
+<!-- PAGE 1: Valentine Question -->
 <section id="valentine" class="active">
   <h1>Kenzie, will you be my Valentine? 💕</h1>
   <button id="yes">Yes 💖</button>
   <button id="no">No 💔</button>
 </section>
 
-<!-- PAGE 2 -->
+<!-- PAGE 2: Photo Gallery -->
 <section id="gallery">
   <h1>Our Memory 📸</h1>
-  <img src="uza.jpeg">
+  <img src="uza.jpeg" alt="Kenzie">
   <br><button onclick="goTo('letter')">Next 💌</button>
 </section>
 
-<!-- PAGE 3 -->
+<!-- PAGE 3: Love Letter -->
 <section id="letter">
   <h1>My Letter To You 💌</h1>
   <div class="letter">
@@ -113,12 +115,20 @@ img {
   <button onclick="askPassword()">Secret 🔐</button>
 </section>
 
-<!-- PAGE 4 -->
+<!-- PAGE 4: Secret Page -->
 <section id="secret">
-  <h1>Only You Can See This 🔐</h1>
+  <!-- Muted Video Background -->
+  <video autoplay loop muted playsinline
+         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1;">
+    <source src="secret.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-  <p>This is my secret truth…  
-  You’re my forever, not just my Valentine 💍</p>
+  <h1>Only You Can See This 🔐</h1>
+  <p style="font-size:1.3rem;color:#d63384;">
+    This is my secret truth…  
+    You’re my forever, not just my Valentine 💍
+  </p>
 
   <button onclick="kiss()">Click for a kiss 😘</button>
   <p id="kissMsg"></p>
@@ -140,7 +150,7 @@ noBtn.addEventListener("mouseenter", () => {
 yesBtn.onclick = () => {
   music.play();
   goTo('gallery');
-  hearts();
+  startHearts();
 };
 
 function goTo(id) {
@@ -148,15 +158,15 @@ function goTo(id) {
   document.getElementById(id).classList.add("active");
 }
 
-function hearts() {
+function startHearts() {
   setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "💖";
-    h.style.left = Math.random() * window.innerWidth + "px";
-    h.style.bottom = "0";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 4000);
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.bottom = "0px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
   }, 300);
 }
 
