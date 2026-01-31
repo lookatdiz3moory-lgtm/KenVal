@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kenzie 💖</title>
+
+<style>
+:root {
+  --bg: linear-gradient(135deg, #ffe4ec, #fff);
+  --text: #d63384;
+}
+
+body.dark {
+  --bg: linear-gradient(135deg, #1e1e2f, #000);
+  --text: #ff8fcf;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  overflow: hidden;
+  color: var(--text);
+}
+
+section {
+  display: none;
+  text-align: center;
+  padding: 40px;
+}
+
+section.active {
+  display: block;
+}
+
+button {
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  margin: 15px;
+}
+
+#yes { background: #ff5fa2; color: white; }
+#no { background: #ddd; position: absolute; }
+
+img {
+  width: 280px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.letter {
+  max-width: 650px;
+  margin: auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.heart {
+  position: absolute;
+  font-size: 24px;
+  animation: float 4s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-600px); opacity: 0; }
+}
+
+.toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<button class="toggle" onclick="toggleDark()">🌙</button>
+<audio id="music" src="music.mp3" loop></audio>
+
+<!-- PAGE 1 -->
+<section id="valentine" class="active">
+  <h1>Kenzie, will you be my Valentine? 💕</h1>
+  <button id="yes">Yes 💖</button>
+  <button id="no">No 💔</button>
+</section>
+
+<!-- PAGE 2 -->
+<section id="gallery">
+  <h1>Our Memory 📸</h1>
+  <img src="uza.jpeg">
+  <br><button onclick="goTo('letter')">Next 💌</button>
+</section>
+
+<!-- PAGE 3 -->
+<section id="letter">
+  <h1>My Letter To You 💌</h1>
+  <div class="letter">
+    Kenzie m3naha My treasure y a7la kenz fl dnya kolaha  
+    enty bgdd aandy hata w ehna maa baad  
+    ayz a2olek en f3ln would you be my Valentine ?  
+    baby i really really love you more than you thinkk  
+    everrrr bahbkkk awyyyyyy 💖
+  </div>
+  <br>
+  <button onclick="askPassword()">Secret 🔐</button>
+</section>
+
+<!-- PAGE 4 -->
+<section id="secret">
+  <h1>Only You Can See This 🔐</h1>
+
+  <p>This is my secret truth…  
+  You’re my forever, not just my Valentine 💍</p>
+
+  <button onclick="kiss()">Click for a kiss 😘</button>
+  <p id="kissMsg"></p>
+
+  <h2>One Day…</h2>
+  <p>This page won’t be a tease anymore 💍</p>
+</section>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const music = document.getElementById("music");
+
+noBtn.addEventListener("mouseenter", () => {
+  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+});
+
+yesBtn.onclick = () => {
+  music.play();
+  goTo('gallery');
+  hearts();
+};
+
+function goTo(id) {
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function hearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💖";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.bottom = "0";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }, 300);
+}
+
+function askPassword() {
+  const pass = prompt("Enter the secret password 💕");
+  if (pass === "Kenzie") goTo('secret');
+  else alert("Nope 😈 only Kenzie knows it");
+}
+
+function kiss() {
+  document.getElementById("kissMsg").innerText =
+    "Redeemed 😘 Unlimited kisses loading...";
+}
+
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
